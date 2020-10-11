@@ -85,20 +85,6 @@ void loop() {
 
 }
 
-// void printVol(){
-//   lcd.setCursor(0, 1);
-//   lcd.print("vol:");
-//   lcd.print(Crtl.vol->value);
-//   if(Crtl.vol->muteOn){
-//     lcd.print("  m ");
-//   }else{
-//     lcd.print("    ");
-//   }
-//   lcd.setCursor(10, 1);
-//   lcd.print("lastVol:");
-//   lcd.print(Crtl.vol->oldValue);
-// }
-
 void isr(){
   Crtl.rotEncoder(digitalRead(encA), digitalRead(encB));
   myDisplay.printVolume(Crtl.vol->value);
