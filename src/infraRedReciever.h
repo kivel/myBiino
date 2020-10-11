@@ -14,6 +14,7 @@ class IRremoteDecoder{
     void initIR();
     void setupIrTable();
     void getIRcode();
+    void resume();
     boolean RECV_TYPE = true;
     bool valid;
     // int irType = 0;

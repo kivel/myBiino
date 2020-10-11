@@ -16,6 +16,10 @@ void IRremoteDecoder::initIR(){
   irrecv.enableIRIn();
 }
 
+void IRremoteDecoder::resume(){
+  irrecv.resume();
+}
+
 void IRremoteDecoder::getIRcode(){
   valid = false;
   if(irrecv.decode(&IRrecvResults)){
@@ -27,7 +31,7 @@ void IRremoteDecoder::getIRcode(){
     }
     valid=true;
   }
-  irrecv.resume();
+  // irrecv.resume();
 }
 
 void IRremoteDecoder::setupIrTable(){

@@ -1,14 +1,34 @@
 #include "control.h"
 
-Control::Control(LCDisplay *lcd, Volume *v){
-  disp=lcd;
-  vol=v;
-}
-
 Control::Control(LCDisplay *lcd, Volume *v, IRremoteDecoder *ir){
   disp=lcd;
   vol=v;
-  IR=ir;
+  IRdecoder=ir;
+  clearButtons();
+  factoryReset=false;
+}
+
+void Control::checkIR(){
+  int i;
+  i=0;
+  IRdecoder->getIRcode(); // get whatever is in the pipeline
+  if(IRdecoder->valid){   // only process if flagged valid
+    if(IRdecoder->ircode == IRdecoder->irTable.Up)    vol->up();
+    if(IRdecoder->ircode == IRdecoder->irTable.Down)  vol->down();
+    if(IRdecoder->ircode == IRdecoder->irTable.Mute)  vol->mute();
+    #if defined(APPLE)
+      if(IRdecoder->ircode == IRdecoder->irTable.Menu)  vol->mute();
+    #endif
+    if(IRdecoder->ircode == IRdecoder->irTable.On)    buttons.Power=true;
+    if(IRdecoder->ircode == IRdecoder->irTable.Enter) buttons.Enter=true;
+    if(IRdecoder->ircode == IRdecoder->irTable.Inp1) i=1;
+    if(IRdecoder->ircode == IRdecoder->irTable.Inp2) i=2;
+    if(IRdecoder->ircode == IRdecoder->irTable.Inp3) i=3;
+    if(IRdecoder->ircode == IRdecoder->irTable.Inp4) i=4;
+    if(IRdecoder->ircode == IRdecoder->irTable.Inp5) i=5;
+    if(IRdecoder->ircode == IRdecoder->irTable.Inp6) i=6;
+  };
+  IRdecoder->resume();  // resume IR receiver
 }
 
 void Control::checkButtons(){

@@ -1,41 +1,46 @@
 #ifndef CONTROL_H
 #define CONTROL_H
 
-#include "config.h"
-#include "volume.h"
 #include "LCD.h"
+#include "volume.h"
 #include "infraRedReciever.h"
+#include "config.h"
 
 class Control{
-  long lastDebounceTime = 0;
   public:
-    Control(LCDisplay *lcd, Volume *v);
     Control(LCDisplay *lcd, Volume *v, IRremoteDecoder *ir);
     Volume *vol;
-    IRremoteDecoder *IR;
-    bool factoryReset = false;
+    IRremoteDecoder *IRdecoder;
+
+    bool factoryReset;
+    uint8_t input;
 
     void checkButtons();
     void clearButtons();
+    void checkIR();
     void rotEncoder(bool, bool);
     void buttonHandler();
+    void printCode();
+
     struct navButtons{
-      boolean Up = false;
-      boolean Down = false;
-      boolean Left = false;
-      boolean Right = false;
-      boolean Enter = false;
-      boolean Menu = false;
-      boolean Play = false;
-      boolean Channel = false;
-      boolean Power = false;
+      boolean Up;
+      boolean Down;
+      boolean Left;
+      boolean Right;
+      boolean Enter;
+      boolean Menu;
+      boolean Play;
+      boolean Channel;
+      boolean Power;
     } buttons;
 
     struct menuFunctions{
-      boolean action = false;
-      boolean active = false;
+      boolean action;
+      boolean active;
     } menu;
+
   private:
+    long lastDebounceTime;
     LCDisplay *disp;
 };
 

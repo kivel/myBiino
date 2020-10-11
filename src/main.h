@@ -3,12 +3,12 @@
 
 #include <Arduino.h>
 
+#include "control.h"
 #include "hardware.h"
 #include "config.h"
-#include "settings.h"
-#include "control.h"
-#include "LCD.h"
-#include "infraRedReciever.h"
+// #include "settings.h"
+// #include "LCD.h"
+// #include "infraRedReciever.h"
 #include "volume.h"
 #include "auxBoards.h"
 
