@@ -5,6 +5,12 @@ Control::Control(LCDisplay *lcd, Volume *v){
   vol=v;
 }
 
+Control::Control(LCDisplay *lcd, Volume *v, IRremoteDecoder *ir){
+  disp=lcd;
+  vol=v;
+  IR=ir;
+}
+
 void Control::checkButtons(){
   if ((millis() - lastDebounceTime) > debounceDelay){
     if (digitalRead(resetBtn) == HIGH){

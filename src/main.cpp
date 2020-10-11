@@ -6,7 +6,8 @@ LCDisplay myDisplay;
 AuxBoard myAuxBoard;
 IRremoteDecoder myIR;
 Volume myVolume(&myDisplay, &myAuxBoard);
-Control Crtl(&myDisplay, &myVolume);
+// Control Crtl(&myDisplay, &myVolume);
+Control Crtl(&myDisplay, &myVolume, &myIR);
 
 uint8_t lastSPIVolume=0;
 
