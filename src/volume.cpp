@@ -22,48 +22,49 @@ void Volume::unMute(){
 };
 
 void Volume::restore(){
-  value = EEPROM.read(START_VOLUME);
+  value = EEPROM.read(LAST_VOLUME);
   set();
 }
 
-void Volume::restore(uint8_t input){
-  if(input<1 || input>EEPROM.read(INPUT_COUNT)){
-    mute();
-    exit(0);
-  }
-  value = EEPROM.read(LAST_VOLUME0+input);
-}
+// void Volume::restore(uint8_t input){
+//   if(input<1 || input>EEPROM.read(INPUT_COUNT)){
+//     mute();
+//     exit(0);
+//   }
+//   value = EEPROM.read(LAST_VOLUME0+input);
+// }
 
 void Volume::up(){
-  if(muteOn){
-    unMute();
-  }
+  if(muteOn)  unMute();
   if(value<64) value++;  //prevent overflow
   set();
 }
 
 void Volume::down(){
-  if(muteOn){
-    unMute();
-  }
+  if(muteOn) unMute();
   if(value>0) value--;  //prevent underflow
   set();
 }
 
 void Volume::set(){
-  if(value==0){
+  // if(value==0){
+  //   auxb->change_volume(value);
+  // }else if((value-oldValue)>1){
+  //   // ramp
+  //   while(oldValue<value){
+  //     oldValue++;
+  //     disp->printVolume(oldValue);
+  //     auxb->change_volume(value);
+  //     delay(50);
+  //   }
+  // }else{
+  //   auxb->change_volume(value);
+  // }
+  // oldValue = value;
+  if(value>=0 && value<=64){
     auxb->change_volume(value);
-  }else if((value-oldValue)>1){
-    // ramp
-    while(oldValue<value){
-      oldValue++;
-      disp->printVolume(oldValue);
-      auxb->change_volume(value);
-      delay(50);
-    }
-  }else{
-    auxb->change_volume(value);
+    disp->printVolume(value);
+    EEPROM.write(LAST_VOLUME, value);
   }
-  oldValue = value;
-  EEPROM.write(START_VOLUME, value);
+
 }

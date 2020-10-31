@@ -1,10 +1,10 @@
 #include "auxBoards.h"
 
 AuxBoard::AuxBoard(){
-  initSPI();
+  init();
 }
 
-void AuxBoard::initSPI(){
+void AuxBoard::init(){
   SPI.begin();
   SPI.setBitOrder(MSBFIRST);
   SPI.setDataMode(SPI_MODE0);
@@ -39,4 +39,40 @@ void AuxBoard::change_volume(uint8_t volume){
     SPI.transfer(volnew);           					// Set Volume
     digitalWrite(chipSelect, HIGH);						// take the CS pin high to de-select the chip:
   }
+}
+
+void AuxBoard::change_input(uint8_t input){
+  digitalWrite(chipSelect, LOW);
+  SPI.transfer(0b01000110);
+  SPI.transfer(GPIO);
+  SPI.transfer(0xFF);
+  digitalWrite(chipSelect, HIGH);
+
+  switch (input)
+  {
+    case (1):
+      spi_input = 0xFE;
+      break;
+    case (2):
+      spi_input = 0xFD;
+      break;
+    case (3):
+      spi_input = 0xFB;
+      break;
+    case (4):
+      spi_input = 0xF7;
+      break;
+    case (5):
+      spi_input = 0xEF;
+      break;
+    case (6):
+      spi_input = 0xDF;
+      break;
+  }
+
+  digitalWrite(chipSelect, LOW);
+  SPI.transfer(0b01000110);
+  SPI.transfer(GPIO);
+  SPI.transfer(spi_input);
+  digitalWrite(chipSelect, HIGH);
 }

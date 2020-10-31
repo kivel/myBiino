@@ -1,7 +1,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <EEPROM.h>
+// #include <EEPROM.h>
+#include <Arduino.h>
 
 /* settings for SPI communication */
 #define IOCON 0x05 // Control register
@@ -22,6 +23,8 @@
 #define LAST_VOLUME4 44
 #define LAST_VOLUME5 45
 #define LAST_VOLUME6 46
+
+#define N_INPUTS 6
 
 // IR remote type -->
 // #define MCINTOSH
@@ -46,6 +49,29 @@ const uint8_t redLED = 9;                   // Pin for the red led
 const uint8_t greenLED = 10;                // Pin for the green led
 
 const uint8_t debounceDelay = 250;          // debounceDelay in ms
+
+#if defined(APPLE)
+  const uint16_t IR_Up    = 0xD05C;   // +
+  const uint16_t IR_Down  = 0xB05C;   // -
+  const uint16_t IR_Left  = 0x105C;   // |<<
+  const uint16_t IR_Right = 0xE05C;   // >>|
+  const uint16_t IR_Play  = 0x405C;   // Menu
+  const uint16_t IR_Mute  = 0x205C;   // Play
+#endif
+
+#if defined(PARASOUND)
+  const uint16_t IR_On    = 0x7C83;   // PowerOn
+  const uint16_t IR_Off   = 0x7C03;   // PowerOff
+  const uint16_t IR_Up    = 0x2FD;    // Vol +
+  const uint16_t IR_Down  = 0x827D;   // Vol -
+  const uint16_t IR_Mute  = 0x32CD;   // OK
+  const uint16_t IR_Inp1  = 0x42BD;   //
+  const uint16_t IR_Inp2  = 0xC23D;   //
+  const uint16_t IR_Inp3  = 0x22DD;   //
+  const uint16_t IR_Inp4  = 0xA25D;   //
+  const uint16_t IR_Inp5  = 0x629D;   //
+  const uint16_t IR_Inp6  = 0xE21D;   //
+#endif
 
 // void resetFactoryDefaults(){
 //   EEPROM.write (INPUT_ID,           1); 		// Start Input
