@@ -10,9 +10,10 @@
 // #include "LCD.h"
 // #include "infraRedReciever.h"
 #include "volume.h"
+#include "input.h"
 #include "auxBoards.h"
 
-void(* resetFunc) (void) = 0; //declare reset function @ address 0
+// void(* resetFunc) (void) = 0; //declare reset function @ address 0
 
 void isr();
 

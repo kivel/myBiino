@@ -3,13 +3,15 @@
 
 #include "LCD.h"
 #include "volume.h"
+#include "input.h"
 #include "infraRedReciever.h"
 #include "config.h"
 
 class Control{
   public:
-    Control(LCDisplay *lcd, Volume *v, IRremoteDecoder *ir);
+    Control(LCDisplay *lcd, Volume *v, Input *i, IRremoteDecoder *ir);
     Volume *vol;
+    Input *inp;
     IRremoteDecoder *IRdecoder;
 
     bool factoryReset;
@@ -23,25 +25,27 @@ class Control{
     void printCode();
 
     struct navButtons{
-      boolean Up;
-      boolean Down;
-      boolean Left;
-      boolean Right;
-      boolean Enter;
-      boolean Menu;
-      boolean Play;
-      boolean Channel;
-      boolean Power;
+      bool Up;
+      bool Down;
+      bool Mute;
+      bool Left;
+      bool Right;
+      bool Enter;
+      bool Menu;
+      bool Play;
+      bool Channel;
+      bool Power;
     } buttons;
 
     struct menuFunctions{
-      boolean action;
-      boolean active;
+      bool action;
+      bool active;
     } menu;
 
   private:
     long lastDebounceTime;
     LCDisplay *disp;
+    void(* resetFunc) (void) = 0; //declare reset function @ address 0
 };
 
 

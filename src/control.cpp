@@ -1,56 +1,50 @@
 #include "control.h"
 
-Control::Control(LCDisplay *lcd, Volume *v, IRremoteDecoder *ir){
+Control::Control(LCDisplay *lcd, Volume *v, Input *i, IRremoteDecoder *ir){
   disp=lcd;
   vol=v;
+  inp=i;
   IRdecoder=ir;
   clearButtons();
   factoryReset=false;
 }
 
 void Control::checkIR(){
-  int i;
-  i=0;
   IRdecoder->getIRcode(); // get whatever is in the pipeline
   if(IRdecoder->valid){   // only process if flagged valid
-    if(IRdecoder->ircode == IRdecoder->irTable.Up)    vol->up();
-    if(IRdecoder->ircode == IRdecoder->irTable.Down)  vol->down();
-    if(IRdecoder->ircode == IRdecoder->irTable.Mute)  vol->mute();
-    #if defined(APPLE)
-      if(IRdecoder->ircode == IRdecoder->irTable.Menu)  vol->mute();
-    #endif
-    if(IRdecoder->ircode == IRdecoder->irTable.On)    buttons.Power=true;
-    if(IRdecoder->ircode == IRdecoder->irTable.Enter) buttons.Enter=true;
-    if(IRdecoder->ircode == IRdecoder->irTable.Inp1) i=1;
-    if(IRdecoder->ircode == IRdecoder->irTable.Inp2) i=2;
-    if(IRdecoder->ircode == IRdecoder->irTable.Inp3) i=3;
-    if(IRdecoder->ircode == IRdecoder->irTable.Inp4) i=4;
-    if(IRdecoder->ircode == IRdecoder->irTable.Inp5) i=5;
-    if(IRdecoder->ircode == IRdecoder->irTable.Inp6) i=6;
+    switch (IRdecoder->ircode) {
+      case IR_Up:     buttons.Up    = true; break;
+      case IR_Down:   buttons.Down  = true; break;
+      case IR_Left:   buttons.Left  = true; break;
+      case IR_Right:  buttons.Right = true; break;
+      case IR_Mute:   buttons.Mute  = true; break;
+      case IR_Play:   buttons.Play  = true; break;
+      default:  disp->clear();
+                disp->LCD.print("unknown IR code");
+                disp->LCD.setCursor(0, 1);
+                disp->LCD.print("0x");
+                disp->LCD.print(IRdecoder->ircode, HEX);
+                break;
+    }
+    IRdecoder->resume();  // resume IR receiver
+    buttonHandler();
   };
-  IRdecoder->resume();  // resume IR receiver
 }
 
 void Control::checkButtons(){
   if ((millis() - lastDebounceTime) > debounceDelay){
     if (digitalRead(resetBtn) == HIGH){
-      factoryReset = true;
+      disp->clear();
+      disp->print("     reset");
+      delay(200);
+      resetFunc();  //call reset
       lastDebounceTime = millis();
     }
 
     int readEncoderButton = digitalRead(encC);
-    if (readEncoderButton == HIGH)
-    {
-      buttons.Enter = true;
-      // if (Volume == 0)
-      // {
-      //   button_Enter = true;
-      // }
-      // else
-      // {
-      //   button_Channel = true;
-      // }
-      // if (in_menu == true)(button_Enter = true);
+    if (readEncoderButton == HIGH){
+      if(menu.active)   menu.action = !menu.action;
+      if(!menu.action)  menu.active = !menu.active;
       lastDebounceTime = millis();
     }
   }
@@ -59,6 +53,7 @@ void Control::checkButtons(){
 void Control::clearButtons(){
   buttons.Up = false;
   buttons.Down = false;
+  buttons.Mute = false;
   buttons.Left = false;
   buttons.Right = false;
   buttons.Enter = false;
@@ -71,18 +66,16 @@ void Control::clearButtons(){
 
 void Control::rotEncoder(bool enc1, bool enc2){
   if(enc1 == enc2){
-    if (menu.active == true){
+    if (menu.active){
       buttons.Left = true;
-    }
-    else{
+    } else {
       buttons.Down = true;
     }
   }
   else{
-    if (menu.active == true){
+    if (menu.active){
       buttons.Right = true;
-    }
-    else{
+    } else {
       buttons.Up = true;
     }
   }
@@ -92,4 +85,10 @@ void Control::rotEncoder(bool enc1, bool enc2){
 void Control::buttonHandler(){
   if(buttons.Up)    vol->up();
   if(buttons.Down)  vol->down();
+  if(buttons.Mute)  vol->mute();
+  if(!menu.action){
+    if(buttons.Left)  inp->prev();
+    if(buttons.Right) inp->next();
+  }
+  clearButtons();
 }
