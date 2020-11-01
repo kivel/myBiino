@@ -14,7 +14,6 @@ class Control{
     Input *inp;
     IRremoteDecoder *IRdecoder;
 
-    bool factoryReset;
     uint8_t input;
 
     void checkButtons();

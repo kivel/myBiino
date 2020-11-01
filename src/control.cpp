@@ -1,14 +1,16 @@
 #include "control.h"
 
 Control::Control(LCDisplay *lcd, Volume *v, Input *i, IRremoteDecoder *ir){
-  disp=lcd;
-  vol=v;
-  inp=i;
-  IRdecoder=ir;
+  disp=lcd;       // the display
+  vol=v;          // the volume control
+  inp=i;          // the input control
+  IRdecoder=ir;   // the infra red decoder
   clearButtons();
-  factoryReset=false;
 }
 
+/*
+  this handles human input via irreceiver
+*/
 void Control::checkIR(){
   IRdecoder->getIRcode(); // get whatever is in the pipeline
   if(IRdecoder->valid){   // only process if flagged valid
@@ -27,10 +29,13 @@ void Control::checkIR(){
                 break;
     }
     IRdecoder->resume();  // resume IR receiver
-    buttonHandler();
+    buttonHandler();      // call worker function
   };
 }
 
+/*
+  this handles the human input via physical buttons
+*/
 void Control::checkButtons(){
   if ((millis() - lastDebounceTime) > debounceDelay){
     if (digitalRead(resetBtn) == HIGH){
