@@ -126,7 +126,6 @@ void Control::buttonHandler(){
     case Menu::volume:
       if(buttons.Up)    vol->up();
       if(buttons.Down)  vol->down();
-      break;
     case Menu::inputs:
       if(buttons.Left)  inp->prev();
       if(buttons.Right) inp->next();
