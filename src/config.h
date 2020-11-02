@@ -10,7 +10,7 @@
 
 // EEPROM ADDRESSES
 #define INPUT_ID 1
-#define POWER_STATE 2
+// #define POWER_STATE 2
 #define START_VOLUME 3
 #define LAST_VOLUME 4
 #define BACKLIGHT_DIMMING 9
@@ -49,6 +49,7 @@ const uint8_t redLED = 9;                   // Pin for the red led
 const uint8_t greenLED = 10;                // Pin for the green led
 
 const uint8_t debounceDelay = 250;          // debounceDelay in ms
+const uint16_t bootLoaderTime = 2000;
 
 #if defined(APPLE)
   const uint16_t IR_Up    = 0xD05C;   // +

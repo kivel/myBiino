@@ -19,12 +19,11 @@ void setup() {
 
   /* setup LCD */
   myDisplay.init();
-  myDisplay.clear();
-  myDisplay.bootLoader(3000);
 
   /* rotary encoder */
   attachInterrupt(digitalPinToInterrupt(encA),isr, CHANGE);  // ISR for rotary encoder
 
+  /* aux boards */
   myAuxBoard.init();
 
   /* restore last volume */

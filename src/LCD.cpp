@@ -15,6 +15,7 @@ void LCDisplay::init(){
   LCD.createChar(6, bar6);
   LCD.createChar(7, bar7);
   LCD.createChar(8, bar8);
+  bootLoader(bootLoaderTime);
 }
 
 void LCDisplay::clear(){
@@ -219,8 +220,8 @@ void LCDisplay::bootLoader(uint16_t d){
   for(uint8_t i=0; i<20; i++){
     if(i==10){
       LCD.setCursor(2, 0);
-      LCD.print("by Dr. K             ");
-      LCD.setCursor(9, 1);
+      LCD.print("firmware by Dr. K");
+      LCD.setCursor(i, 1);
     }
     LCD.write(255);
     delay(d/20);
