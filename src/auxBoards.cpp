@@ -49,7 +49,7 @@ void AuxBoard::change_input(uint8_t input){
   digitalWrite(chipSelect, HIGH);
   // no input selected, for standby
   if(input==0) return;
-
+  uint8_t spi_input;
   switch (input)
   {
     case (1):
