@@ -22,8 +22,7 @@ class Input {
   private:
     LCDisplay *disp;
     AuxBoard *auxb;
-    uint8_t spi_input;
-    const char *inputNames[N_INPUTS] = { "moOde DAC", "2: n/a", "3: n/a", "4: n/a", "5: n/a", "Yamaha" };
+    const char *inputNames[N_INPUTS] = { "moOde DAC ", "2: n/a    ", "3: n/a    ", "4: n/a     ", "5: n/a     ", "Yamaha     " };
 };
 
 #endif /* INPUT_H */

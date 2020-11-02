@@ -4,7 +4,6 @@
 Input::Input(LCDisplay *lcd1, AuxBoard *a){
   disp=lcd1;
   auxb=a;
-  spi_input = 0xFF;
   input = 0;
 }
 
