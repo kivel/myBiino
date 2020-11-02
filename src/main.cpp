@@ -3,7 +3,7 @@
 LCDisplay myDisplay;
 AuxBoard myAuxBoard;
 IRremoteDecoder myIR;
-Power myPower(&myDisplay);
+Power myPower(&myDisplay, &myAuxBoard);
 Menu myMenu(&myDisplay);
 Volume myVolume(&myDisplay, &myAuxBoard);
 Input myInput(&myDisplay, &myAuxBoard);

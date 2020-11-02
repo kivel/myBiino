@@ -6,10 +6,11 @@
 
 #include "config.h"
 #include "LCD.h"
+#include "auxBoards.h"
 
 class Power {
   public:
-    Power(LCDisplay *lcd);
+    Power(LCDisplay *lcd, AuxBoard *a);
     void init();
     void restore();
     void on();
@@ -18,6 +19,8 @@ class Power {
     bool state;
   private:
     LCDisplay *disp;
+    AuxBoard *auxb;
+    void(* resetFunc) (void) = 0; //declare reset function @ address 0
 };
 
 #endif /* POWER_H */

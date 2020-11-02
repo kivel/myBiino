@@ -47,6 +47,8 @@ void AuxBoard::change_input(uint8_t input){
   SPI.transfer(GPIO);
   SPI.transfer(0xFF);
   digitalWrite(chipSelect, HIGH);
+  // no input selected, for standby
+  if(input==0) return;
 
   switch (input)
   {
