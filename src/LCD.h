@@ -3,7 +3,6 @@
 
 #include <LiquidCrystal.h>
 
-#include "customChar.h"
 #include "config.h"
 #include <Arduino.h>
 
