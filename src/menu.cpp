@@ -6,7 +6,6 @@ Menu::Menu(LCDisplay *lcd){
 }
 
 void Menu::init(){
-  action=false;
   pwrMenu=exit;
   mainMenu=volume;
 }
@@ -33,6 +32,7 @@ void Menu::prev(){
   }
 }
 
+// TODO: move to LCDisplay, to handle OLED later
 void Menu::printPwrMenu(){
   disp->clear();
   disp->LCD.setCursor(0,0);
@@ -43,10 +43,4 @@ void Menu::printPwrMenu(){
   } else {
     disp->LCD.print("Enter to exit       ");
   }
-}
-
-void Menu::printMenu(){
-  disp->LCD.setCursor(0,1);
-  disp->LCD.print("P: ");
-  disp->LCD.print(pwrMenu);
 }

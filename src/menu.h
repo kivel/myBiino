@@ -11,14 +11,11 @@ class Menu {
     void enter();
     void next();
     void prev();
-    enum Menus {volume, inputs, power} mainMenu;
-    enum PwrMen {exit, off} pwrMenu;
-    bool onOff;
-    bool action;
+    enum {volume, inputs, power} mainMenu;
+    enum {exit, off} pwrMenu;
   private:
     LCDisplay *disp;
     void printPwrMenu();
-    void printMenu();
 };
 
 #endif /* MENU_H */
