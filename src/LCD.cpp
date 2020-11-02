@@ -190,8 +190,7 @@ void LCDisplay::printVolume(uint8_t vol){
   if (number > 9){
     d = (number - (number % 10)) / 10;
     number = number % 10;
-  }
-  else{
+  } else {
     d = 0;
   }
 
@@ -200,16 +199,6 @@ void LCDisplay::printVolume(uint8_t vol){
   LCDisplay::printNumber(d, 12);
   LCDisplay::printNumber(u, 15);
   LCD.print("dB");
-}
-
-void LCDisplay::printPower(bool state){
-  clear();
-  if(!state){
-    LCD.setCursor(5,0);
-    LCD.print("power off");
-    LCD.setCursor(2,1);
-    LCD.print("entering standby");
-  }
 }
 
 void LCDisplay::bootLoader(uint16_t d){
