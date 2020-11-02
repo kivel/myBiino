@@ -1,9 +1,6 @@
 #ifndef POWER_H
 #define POWER_H
 
-#include <Arduino.h>
-#include <EEPROM.h>
-
 #include "config.h"
 #include "LCD.h"
 #include "auxBoards.h"
