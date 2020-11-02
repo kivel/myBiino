@@ -11,11 +11,8 @@
 class Power {
   public:
     Power(LCDisplay *lcd, AuxBoard *a);
-    void init();
-    void restore();
     void on();
     void off();
-    void toggle();
     bool state;
   private:
     LCDisplay *disp;

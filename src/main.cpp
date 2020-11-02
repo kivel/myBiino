@@ -20,8 +20,7 @@ void setup() {
   /* setup LCD */
   myDisplay.init();
   myDisplay.clear();
-  // myDisplay.bootLoader(bootDelay);
-  myPower.init();
+  myDisplay.bootLoader(3000);
 
   /* rotary encoder */
   attachInterrupt(digitalPinToInterrupt(encA),isr, CHANGE);  // ISR for rotary encoder
@@ -31,6 +30,7 @@ void setup() {
   /* restore last volume */
   myVolume.restore();
 
+  /* restore last input */
   myInput.restore();
 }
 
@@ -38,13 +38,9 @@ void loop() {
   if(myPower.state){
     Crtl.worker();
   } else {
-    myDisplay.LCD.clear();
-    myDisplay.print("standby");
-    delay(500);
-    myDisplay.LCD.setCursor(0,1);
-    myDisplay.print("ENTER for power");
     Crtl.standbyCheck();
     delay(500);
+    analogWrite(lcdBacklight, 0);
   }
 
   delay(150);

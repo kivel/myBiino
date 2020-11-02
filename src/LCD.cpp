@@ -21,8 +21,23 @@ void LCDisplay::clear(){
   LCD.clear();
 }
 
+void LCDisplay::blank(){
+  LCD.noDisplay();
+}
+
 void LCDisplay::print(const char* c){
   LCD.print(c);
+}
+
+void LCDisplay::standbyMessage(){
+  LCD.clear();
+  LCD.setCursor(2,0);
+  LCD.print("entering standby");
+  delay(500);
+  LCD.setCursor(6,1);
+  LCD.print("good bye");
+  delay(1000);
+  LCD.noDisplay();
 }
 
 void LCDisplay::custom0(uint8_t col)															// Create custom numbers

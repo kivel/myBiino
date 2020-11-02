@@ -15,7 +15,6 @@ void Menu::enter(){
   switch (mainMenu) {
     case volume: mainMenu=inputs; break;
     case inputs: mainMenu=power; printPwrMenu(); break;
-    case power: action=true;
     default: mainMenu=volume;
   }
 }

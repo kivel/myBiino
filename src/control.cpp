@@ -18,10 +18,9 @@ void Control::worker(){
 }
 
 void Control::standbyCheck(){
-  if(digitalRead(encC)){
-    pwr->on();
-    menuExit();
-  }
+  if(digitalRead(encC)) pwr->on();
+  IRdecoder->getIRcode(); // get whatever is in the pipeline
+  if(IRdecoder->valid && IRdecoder->ircode == IR_On)  pwr->on();
 }
 
 /*
@@ -40,7 +39,7 @@ void Control::checkButtons(){
 
     int readEncoderButton = digitalRead(encC);
     if (readEncoderButton == HIGH){
-      menu->enter();
+      buttons.Enter = true;
       buttonHandler();
       lastDebounceTime = millis();
     }
@@ -133,15 +132,17 @@ void Control::buttonHandler(){
     case Menu::power:
       if(buttons.Left)  menu->prev();
       if(buttons.Right) menu->next();
-      if(menu->action && menu->pwrMenu==1){
+      if(buttons.Enter && menu->pwrMenu==1){
         pwr->off();
         menu->init();
         break;
       }
-      if(menu->action && menu->pwrMenu==0){
+      if(buttons.Enter && menu->pwrMenu==0){
+        buttons.Enter = false;
         menuExit();
       }
   }
+  if(buttons.Enter) menu->enter();
   lastButtonTime = millis();
   clearButtons();
 }
