@@ -186,6 +186,16 @@ void LCDisplay::printVolume(uint8_t vol){
   LCD.print("dB");
 }
 
+void LCDisplay::printPower(bool state){
+  clear();
+  if(!state){
+    LCD.setCursor(5,0);
+    LCD.print("power off");
+    LCD.setCursor(2,1);
+    LCD.print("entering standby");
+  }
+}
+
 void LCDisplay::bootLoader(uint16_t d){
   LCD.clear();
   LCD.setCursor(2, 0);

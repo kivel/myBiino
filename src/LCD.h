@@ -13,6 +13,7 @@ class LCDisplay {
     void clear();
     void print(const char*);
     void printVolume(uint8_t vol);
+    void printPower(bool state);
     void bootLoader(uint16_t delay);
     LiquidCrystal LCD;
   private:
