@@ -3,7 +3,7 @@
 Power::Power(LCDisplay *lcd, AuxBoard *a){
   disp=lcd;
   auxb=a;
-  state = false;
+  state = true;
 }
 
 void Power::on(){
