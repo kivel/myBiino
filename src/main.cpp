@@ -3,10 +3,11 @@
 LCDisplay myDisplay;
 AuxBoard myAuxBoard;
 IRremoteDecoder myIR;
+Power myPower(&myDisplay, &myAuxBoard);
+Menu myMenu(&myDisplay);
 Volume myVolume(&myDisplay, &myAuxBoard);
 Input myInput(&myDisplay, &myAuxBoard);
-Control Crtl(&myDisplay, &myVolume, &myInput, &myIR);
-// Control myControls(&myDisplay, &myVolume, &myIR);
+Control Crtl(&myDisplay, &myPower, &myMenu, &myVolume, &myInput, &myIR);
 
 uint8_t lastSPIVolume=0;
 
@@ -19,7 +20,7 @@ void setup() {
   /* setup LCD */
   myDisplay.init();
   myDisplay.clear();
-  // myDisplay.bootLoader(bootDelay);
+  myDisplay.bootLoader(3000);
 
   /* rotary encoder */
   attachInterrupt(digitalPinToInterrupt(encA),isr, CHANGE);  // ISR for rotary encoder
@@ -29,15 +30,25 @@ void setup() {
   /* restore last volume */
   myVolume.restore();
 
+  /* restore last input */
   myInput.restore();
 }
 
 void loop() {
-  Crtl.checkButtons();
-  Crtl.checkIR();
+  if(myPower.state){
+    Crtl.worker();
+  } else {
+    Crtl.standbyCheck();
+    delay(500);
+    analogWrite(lcdBacklight, 0);
+  }
+
   delay(150);
 }
 
+/*
+  interrupt service Subroutine
+*/
 void isr(){
-  Crtl.rotEncoder(digitalRead(encA), digitalRead(encB));
+  if(myPower.state)  Crtl.rotEncoder(digitalRead(encA), digitalRead(encB));
 }

@@ -21,8 +21,23 @@ void LCDisplay::clear(){
   LCD.clear();
 }
 
+void LCDisplay::blank(){
+  LCD.noDisplay();
+}
+
 void LCDisplay::print(const char* c){
   LCD.print(c);
+}
+
+void LCDisplay::standbyMessage(){
+  LCD.clear();
+  LCD.setCursor(2,0);
+  LCD.print("entering standby");
+  delay(500);
+  LCD.setCursor(6,1);
+  LCD.print("good bye");
+  delay(1000);
+  LCD.noDisplay();
 }
 
 void LCDisplay::custom0(uint8_t col)															// Create custom numbers
@@ -184,6 +199,16 @@ void LCDisplay::printVolume(uint8_t vol){
   LCDisplay::printNumber(d, 12);
   LCDisplay::printNumber(u, 15);
   LCD.print("dB");
+}
+
+void LCDisplay::printPower(bool state){
+  clear();
+  if(!state){
+    LCD.setCursor(5,0);
+    LCD.print("power off");
+    LCD.setCursor(2,1);
+    LCD.print("entering standby");
+  }
 }
 
 void LCDisplay::bootLoader(uint16_t d){

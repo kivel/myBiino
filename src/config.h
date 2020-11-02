@@ -10,7 +10,7 @@
 
 // EEPROM ADDRESSES
 #define INPUT_ID 1
-#define INPUT_COUNT 2
+#define POWER_STATE 2
 #define START_VOLUME 3
 #define LAST_VOLUME 4
 #define BACKLIGHT_DIMMING 9
@@ -55,8 +55,11 @@ const uint8_t debounceDelay = 250;          // debounceDelay in ms
   const uint16_t IR_Down  = 0xB05C;   // -
   const uint16_t IR_Left  = 0x105C;   // |<<
   const uint16_t IR_Right = 0xE05C;   // >>|
-  const uint16_t IR_Play  = 0x405C;   // Menu
-  const uint16_t IR_Mute  = 0x205C;   // Play
+  const uint16_t IR_Mute  = 0x405C;   // Menu
+  const uint16_t IR_Play  = 0x205C;   // Play
+  //dummy
+  const uint16_t IR_On    = 0x1000;   // PowerOn
+  const uint16_t IR_Off   = 0x1001;   // PowerOff
 #endif
 
 #if defined(PARASOUND)
@@ -71,6 +74,10 @@ const uint8_t debounceDelay = 250;          // debounceDelay in ms
   const uint16_t IR_Inp4  = 0xA25D;   //
   const uint16_t IR_Inp5  = 0x629D;   //
   const uint16_t IR_Inp6  = 0xE21D;   //
+  // dummy
+  const uint16_t IR_Left  = 0x0003;   // |<<
+  const uint16_t IR_Right = 0x0004;   // >>|
+  const uint16_t IR_Play  = 0x0006;   // Play
 #endif
 
 // void resetFactoryDefaults(){
