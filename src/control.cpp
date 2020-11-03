@@ -61,6 +61,12 @@ void Control::checkIR(){
       case IR_Play:   buttons.Play  = true; break;
       case IR_On:     buttons.PowerOn = true; break;
       case IR_Off:    buttons.PowerOff = true; break;
+      case IR_Inp1:   inp->selectInput(1); break;
+      case IR_Inp2:   inp->selectInput(2); break;
+      case IR_Inp3:   inp->selectInput(3); break;
+      case IR_Inp4:   inp->selectInput(4); break;
+      case IR_Inp5:   inp->selectInput(5); break;
+      case IR_Inp6:   inp->selectInput(6); break;
       default:  disp->clear();
                 disp->LCD.print("unknown IR code");
                 disp->LCD.setCursor(0, 1);
@@ -121,6 +127,7 @@ void Control::rotEncoder(bool enc1, bool enc2){
 
 void Control::buttonHandler(){
   if(buttons.Mute)  vol->mute();
+  if(buttons.PowerOff)  pwr->off();
   switch (menu->mainMenu) {
     case Menu::volume:
       if(buttons.Up)    vol->up();

@@ -28,8 +28,8 @@
 
 // IR remote type -->
 // #define MCINTOSH
-// #define PARASOUND
-#define APPLE
+#define PARASOUND
+// #define APPLE
 
 // Arduino pins
 // inputs
@@ -65,7 +65,7 @@ const uint16_t bootLoaderTime = 2000;
 
 #if defined(PARASOUND)
   const uint16_t IR_On    = 0x7C83;   // PowerOn
-  const uint16_t IR_Off   = 0x7C03;   // PowerOff
+  const uint16_t IR_Off   = 0xFC03;   // PowerOff
   const uint16_t IR_Up    = 0x2FD;    // Vol +
   const uint16_t IR_Down  = 0x827D;   // Vol -
   const uint16_t IR_Mute  = 0x32CD;   // OK
